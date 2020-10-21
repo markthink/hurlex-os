@@ -1,0 +1,17 @@
+gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0
+
+megs: 32
+romimage: file=$BXSHARE/BIOS-bochs-latest
+vgaromimage: file=$BXSHARE/VGABIOS-lgpl-latest
+
+floppya: 1_44="floppy.img", status=inserted
+
+boot: floppy
+mouse: enabled=0
+log: bochsout.txt
+
+panic: action=ask
+error: action=report
+info: action=report
+#debug: action=ignore
+display_library: x
