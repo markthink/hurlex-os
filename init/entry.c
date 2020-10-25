@@ -10,11 +10,13 @@ int kern_entry() {
   init_gdt();
   init_idt();
 
+
   console_clear();
   // console_write_color("Hello, OS Kernel!\n", rc_black, rc_green);
   printk_color(rc_black, rc_green, "Hello, OS Kernel!\n");
 
   init_timer(200);
+  // asm volatile ("sti");
   // print_cur_status();
   // panic("test");
 

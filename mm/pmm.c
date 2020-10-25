@@ -39,7 +39,7 @@ void init_pmm() {
     //如果是可用内存，按协议 1 表示可用内存，其它数字指保留区域
     if (map_entry->type == 1 && map_entry->base_addr_low == 0x100000) {
       //把内核结束位置到结束位置的内存段，按页存储到页管理栈里
-      //最鑫支持512MB的物理内存
+      //最高支持 512MB 的物理内存
       uint32_t page_addr =
           map_entry->base_addr_low + (uint32_t)(kern_end - kern_start);
       uint32_t length = map_entry->base_addr_low + map_entry->length_low;

@@ -44,7 +44,8 @@ glb_mboot_ptr:                  ; 全局的 multiboot 结构体指针
 STACK_TOP   equ     $-stack-1   ; 内核栈顶，$ 符指代是当前地址
 ; ------------------------------------------------------
 
-
+; eax/edx/ecx 寄存器是调用者保存
+; ebx/esi/edi/esp 寄存器是被调用者保存
 
 
 

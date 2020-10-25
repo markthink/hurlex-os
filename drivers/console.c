@@ -60,7 +60,7 @@ void console_putc_color(char c, real_color_t back, real_color_t fore) {
 
   uint8_t attribute_byte = (back_color << 4) | (fore_color & 0x0F);
   uint16_t attribute = attribute_byte << 8;
-
+  // https://zh.wikipedia.org/wiki/控制字符
   // 0x08 是 退格键 的 ASCII 码
   // 0x09 是 tab 键 的 ASCII 码
   if (c == 0x08 && cursor_x) {
