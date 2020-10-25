@@ -8,7 +8,7 @@
 //进程状态描述
 typedef
 enum task_state {
-    TASK_UNINT = 0,         //未初始化
+    TASK_UNINIT = 0,         //未初始化
     TASK_SLEEPING = 1,      //睡眠中
     TASK_RUNNABLE = 2,      //可运行也许正在运行
     TASK_ZOMBIE = 3,        //僵尸状态
