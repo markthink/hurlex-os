@@ -19,7 +19,7 @@ LD = ld
 ASM = nasm
 
 C_FLAGS = -std=c99 -c -m32 -Wall -Wextra -ggdb -gstabs+ -ffreestanding \
-                 -I. -Iinclude -Iarch/i386 -Iarch/i386/include -fno-stack-protector
+                 -I. -Iinclude -Iarch/i386 -Iarch/i386/include -fno-stack-protector -fgnu89-inline -Wno-implicit-fallthrough
 LD_FLAGS = -T scripts/kernel.ld -nostdlib -m elf_i386
 ASM_FLAGS = -f elf -g -F stabs
 
@@ -40,7 +40,7 @@ link:
 
 .PHONY:clean
 clean:
-	$(RM) $(S_OBJECTS) $(C_OBJECTS) hx_kernel
+	$(RM) $(S_OBJECTS) $(C_OBJECTS) hx_kernel bochsout.txt
 
 .PHONY:update_fd
 update_fd:
@@ -49,37 +49,42 @@ update_fd:
 	sleep 1
 	sudo umount /mnt/kernel
 
-.PHONY:mount_image
-mount_image:
-	sudo mount floppy.img /mnt/kernel
+.PHONY:bochs
+bochs:
+	bochs -f bochsrc.txt
 
-.PHONY:umount_image
-umount_image:
-	sudo umount /mnt/kernel
 
-.PHONY:iso
-iso:
-	cp hx_kernel isodir/boot/
-	grub2-mkrescue -o hurlex.iso isodir
+# .PHONY:mount_image
+# mount_image:
+# 	sudo mount floppy.img /mnt/kernel
 
-.PHONY:runiso
-runiso:
-	qemu -m 128 -hda disk.img -cdrom hurlex.iso -boot d
+# .PHONY:umount_image
+# umount_image:
+# 	sudo umount /mnt/kernel
 
-.PHONY:runfd
-runfd:
-	qemu -m 128 -hda disk.img -fda floppy.img -boot a
+# .PHONY:iso
+# iso:
+# 	cp hx_kernel isodir/boot/
+# 	grub2-mkrescue -o hurlex.iso isodir
 
-.PHONY:qemu
-qemu:
-	qemu -m 128 -hda disk.img -kernel hx_kernel
+# .PHONY:runiso
+# runiso:
+# 	qemu -m 128 -hda disk.img -cdrom hurlex.iso -boot d
 
-.PHONY:debug
-debug:
-	qemu -S -s -m 128 -hda disk.img -fda floppy.img -boot a &
-	sleep 1
-	cgdb -x scripts/gdbinit
+# .PHONY:runfd
+# runfd:
+# 	qemu -m 128 -hda disk.img -fda floppy.img -boot a
 
-.PHONY:code_line_count
-code_line_count:
-	find . -type f -name "*.[c|h|s]" -exec cat {} \; | wc -l
+# .PHONY:qemu
+# qemu:
+# 	qemu -m 128 -hda disk.img -kernel hx_kernel
+
+# .PHONY:debug
+# debug:
+# 	qemu -S -s -m 128 -hda disk.img -fda floppy.img -boot a &
+# 	sleep 1
+# 	cgdb -x scripts/gdbinit
+
+# .PHONY:code_line_count
+# code_line_count:
+# 	find . -type f -name "*.[c|h|s]" -exec cat {} \; | wc -l

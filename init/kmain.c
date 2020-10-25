@@ -37,21 +37,22 @@ void kern_init(void)
         fs_init();
 
         enable_intr();
-//        kthread_test();
+        kthread_test();
 
-        uint8_t ch = 0;
-        while (true) {
-                if ((ch = getchar()) != 0) {
-                        if (ch == 80) {
-                                
-                                console_view_down(1);
-                        } else if (ch == 72) {
-                                console_view_up(1);
-                        }
-                }
-        }
+        // uint8_t ch = 0;
+        // while (true) {
+        //         if ((ch = getchar()) != 0) {
+        //                 if (ch == 80) {
 
-        while (true) {
+        //                         console_view_down(1);
+        //                 } else if (ch == 72) {
+        //                         console_view_up(1);
+        //                 }
+        //         }
+        // }
+
+        while (true)
+        {
                 cpu_hlt();
         }
 }
@@ -59,11 +60,14 @@ void kern_init(void)
 static int init_main(void *args)
 {
         cprintk(rc_black, rc_red, "It's %s thread  pid = %d  args: %s\n\n",
-                        current->name, current->pid, (const char *)args);
+                current->name, current->pid, (const char *)args);
 
-        while (true) {
+        while (true)
+        {
                 cprintk(rc_black, rc_blue, "C");
-                uint32_t i = 100000; while (i--);
+                uint32_t i = 100000;
+                while (i--)
+                        ;
         }
 
         return 0;
@@ -72,17 +76,20 @@ static int init_main(void *args)
 static int user_mode_test_main(void *args)
 {
         cprintk(rc_black, rc_blue, "It's %s thread  pid = %d  args: %s\n",
-                        current->name, current->pid, (const char *)args);
+                current->name, current->pid, (const char *)args);
 
         cprintk(rc_black, rc_light_brown, "\nTest syscall now:\n");
 
-        __asm__ volatile ("mov $0, %eax");
-        __asm__ volatile ("int $0x80");
+        __asm__ volatile("mov $0, %eax");
+        __asm__ volatile("int $0x80");
 
         printk("\n");
-        while (true) {
+        while (true)
+        {
                 cprintk(rc_black, rc_green, "A");
-                uint32_t i = 100000; while (i--);
+                uint32_t i = 100000;
+                while (i--)
+                        ;
         }
 
         return 0;
@@ -103,10 +110,12 @@ static void kthread_test(void)
         assert(pid > 0, "init_task error!");
         glb_init_task = find_task(pid);
         set_proc_name(glb_init_task, "init");
- 
-        while (true) {
+
+        while (true)
+        {
                 cprintk(rc_black, rc_red, "B");
-                uint32_t i = 100000; while (i--);
+                uint32_t i = 100000;
+                while (i--)
+                        ;
         }
 }
-
