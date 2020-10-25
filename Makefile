@@ -19,7 +19,7 @@ ASM = nasm
 # -fno_pic  不要使用与位置无关的代码
 # -fno-builtin 要求 gcc 不主动使用自己的内建函数，除非显式声明
 # -fno-stack-protector 不使用栈保护等检测
-C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic -fno-builtin -fno-stack-protector -I include
+C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic -fno-builtin -fno-stack-protector -fgnu89-inline -I include
 # -nostdlib 不链接C语言的标准库
 LD_FLAGS = -T scripts/kernel.ld -m elf_i386 -nostdlib
 # -g 生成调试信息
